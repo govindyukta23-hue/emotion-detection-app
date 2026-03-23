@@ -23,9 +23,33 @@ def emotion_detector(text_to_analyze):
 
     if response.status_code == 200:
         emotions = response.json()["emotion"]["document"]["emotion"]
-        return emotions
-    else:
-        return "Error"
 
-# Example
-print(emotion_detector("I am happy today"))
+        anger = emotions["anger"]
+        disgust = emotions["disgust"]
+        fear = emotions["fear"]
+        joy = emotions["joy"]
+        sadness = emotions["sadness"]
+
+        dominant_emotion = max(emotions, key=emotions.get)
+
+        return {
+            "anger": anger,
+            "disgust": disgust,
+            "fear": fear,
+            "joy": joy,
+            "sadness": sadness,
+            "dominant_emotion": dominant_emotion
+        }
+
+    else:
+        return {
+            "anger": None,
+            "disgust": None,
+            "fear": None,
+            "joy": None,
+            "sadness": None,
+            "dominant_emotion": None
+        }
+
+
+print(emotion_detector("I am very happy today!"))
